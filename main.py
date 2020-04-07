@@ -1,28 +1,31 @@
 from tkinter import *
 import tkinter as tk
 
-window = Tk()
 
-diameter = tk.StringVar()
-diameter.set("")
+class Calculate:
+    def __init__(self):
+        self.window = Tk()
+
+        self.diameter = tk.StringVar()
+        self.diameter.set("")
+
+        self.window.title = "Baumberechnung"
+        self.window.minsize(width=300, height=300)
+
+        self.diameter_entry = Entry(self.window)
+        self.diameter_label = Label(self.window, text="Durchmesser rot: ")
+        self.calculate_button = Button(self.window, text="Berechnen", command=self.calculate)
+        self.result_label = Label(self.window, textvariable=self.diameter)
+
+        self.diameter_label.grid(column=0, row=0)
+        self.diameter_entry.grid(column=1, row=0)
+        self.calculate_button.grid(column=0, row=1)
+        self.result_label.grid(column=1, row=1)
+
+        self.window.mainloop()
+
+    def calculate(self):
+        self.diameter.set(self.diameter_entry.get())
 
 
-def calculate():
-    diameter.set(diameter_text.get("1.0"))
-
-
-window.title = ""
-
-diameter_text = Text(window, width=10, height=1)
-diameter_label = Label(window, text="Durchmesser rot: ")
-calculate_button = Button(window, text="Berechnen", command=calculate())
-result_label = Label(window, textvariable=diameter)
-
-diameter_label.grid(column=0, row=0)
-diameter_text.grid(column=1, row=0)
-calculate_button.grid(column=0, row=1)
-result_label.grid(column=1, row=1)
-
-
-
-window.mainloop()
+Calculate()

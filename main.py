@@ -15,7 +15,7 @@ class Calculate:
         self.main.minsize(width=300, height=300)
 
         self.generate_tree = Button(self.main, text="Baeume hinzufuegen", command=self.generate_trees)
-        self.calculate_tree = Button(self.main, text="ausrechnen", command=lambda: self.calculate_trees(self.main))
+        self.calculate_tree = Button(self.main, text="Berechnungsmaße eingeben", command=lambda: self.calculate_trees())
         self.show_tree = Button(self.main, text="gespeicherte Baeume anzeigen", command=self.show_trees)
 
         self.generate_tree.grid(column=0, row=0)
@@ -32,19 +32,28 @@ class Calculate:
 
         self.main.withdraw()
         show_tree_gui = Tk()
-        show_tree_gui.title("Baeume anzeigen")
         show_tree_gui.minsize(width=300, height=300)
 
-        tree_dict = pickle.load(open('trees.pkl', 'rb'))
+        try:
+            tree_dict = pickle.load(open('trees.pkl', 'rb'))
+        except:
+            tree_dict = {}
 
         for key, value in tree_dict.items():
             print_dict = print_dict + ("\nBaumnummer: {0} \nLaenge: {1}\nDurchmesser rot: {2}\n"
                                        .format(key, value[0], value[1]))
 
         show_tree_label = Label(show_tree_gui, text=print_dict)
-        show_tree_label.pack()
+        end_button = Button(show_tree_gui, text="Beenden", command=lambda: self.close(show_tree_gui, self.main))
 
-    def calculate_trees(self, main):
+        show_tree_label.grid(column=0, row=0)
+        end_button.grid(column=1, row=0)
+
+    def close(self, show_tree_gui, main):
+        show_tree_gui.withdraw()
+        main.deiconify()
+
+    def calculate_trees(self):
         cal.Calculate(self.main)
 
 
